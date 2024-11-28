@@ -1,0 +1,30 @@
+services:
+  apache:
+    container_name: apache
+    build:
+      context: /home/ubuntu1/tasks/task_12/configs/local/apache
+      dockerfile: dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - br0
+  
+  nginx:
+    user: nginx
+    container_name: nginx
+    build:
+      context: /home/ubuntu1/tasks/task_12/configs/local/nginx
+      dockerfile: dockerfile
+    ports:
+      - 80:80
+    networks:
+      - br0
+    volumes:
+      - /etc/ssl/self-signed:/home/ubuntu
+    depends_on:
+      - apache
+
+networks:
+  br0:
+    driver: bridge
+
